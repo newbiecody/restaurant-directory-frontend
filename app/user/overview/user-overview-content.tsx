@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useUser } from "@/context/user-context";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import UserActivitySection from "./user-activity-section";
 
 export default function UserOverviewContent() {
   const { user } = useUser();
@@ -87,6 +88,11 @@ export default function UserOverviewContent() {
           )}
         </CardContent>
       </Card>
+
+      <div className="space-y-4">
+        <h2 className="text-2xl font-bold">Recent Activity</h2>
+        <UserActivitySection userId={user.id} />
+      </div>
     </div>
   );
 }

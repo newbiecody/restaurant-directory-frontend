@@ -1,7 +1,10 @@
 import { notFound } from "next/navigation";
 import api from "@/lib/api";
 import type User from "@/types/user.types";
+import type Activity from "@/types/activity.types";
+import type { SpringPageResponse } from "@/types/spring.types";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import ActivityCard from "@/components/activity/activity-card";
 
 async function fetchUser(id: string) {
   try {
@@ -11,13 +14,27 @@ async function fetchUser(id: string) {
   }
 }
 
+async function fetchUserActivities(userId: string) {
+  try {
+    const response = await api.get<SpringPageResponse<Activity[]>>(
+      `/activities?userId=${userId}&page=0&size=10&sort=createdAt,desc`
+    );
+    return response.content || [];
+  } catch {
+    return [];
+  }
+}
+
 export default async function UserProfilePage({
   params,
 }: {
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
-  const user = await fetchUser(id);
+  const [user, activities] = await Promise.all([
+    fetchUser(id),
+    fetchUserActivities(id),
+  ]);
 
   if (!user) {
     notFound();
@@ -91,6 +108,15 @@ export default async function UserProfilePage({
           )}
         </CardContent>
       </Card>
+
+      {activities.length > 0 && (
+        <div className="space-y-4">
+          <h2 className="text-2xl font-bold">Recent Activity</h2>
+          {activities.map((activity) => (
+            <ActivityCard key={activity.id} activity={activity} />
+          ))}
+        </div>
+      )}
     </div>
   );
 }

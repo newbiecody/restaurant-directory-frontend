@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import api from "@/lib/api";
 import type Dish from "@/types/dish.types";
 import type Review from "@/types/review.types";
+import type Restaurant from "@/types/restaurant.types";
 import { SpringPageResponse } from "@/types/spring.types";
 import ReviewsClient from "./reviews-client";
 import DishInteractiveSection from "@/components/dish/dish-interactive-section";
@@ -27,6 +28,14 @@ async function fetchReviews(dishId: string) {
   }
 }
 
+async function fetchRestaurant(restaurantId: number) {
+  try {
+    return await api.get<Restaurant>(`/places/${restaurantId}`);
+  } catch {
+    return null;
+  }
+}
+
 export default async function DishDetailPage({
   params,
 }: {
@@ -42,6 +51,8 @@ export default async function DishDetailPage({
     notFound();
   }
 
+  const restaurant = await fetchRestaurant(dish.restaurantId);
+
   const avgRating =
     reviews.length > 0
       ? (reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length).toFixed(1)
@@ -53,6 +64,14 @@ export default async function DishDetailPage({
         <div>
           <h1 className="text-4xl font-bold">{dish.name}</h1>
           <p className="text-muted-foreground mt-2">{dish.description}</p>
+          {restaurant && (
+            <p className="text-sm text-muted-foreground mt-2">
+              From{" "}
+              <Link href={`/place/${restaurant.id}`} className="text-orange-600 hover:underline">
+                {restaurant.name}
+              </Link>
+            </p>
+          )}
         </div>
 
         <div className="grid grid-cols-4 gap-4">
