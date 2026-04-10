@@ -6,6 +6,7 @@ import type Restaurant from "@/types/restaurant.types";
 import { SpringPageResponse } from "@/types/spring.types";
 import ReviewsClient from "./reviews-client";
 import DishInteractiveSection from "@/components/dish/dish-interactive-section";
+import RatingDistribution from "@/components/dish/rating-distribution";
 import BookmarkableImageCard from "@/components/custom/image-card/bookmarkable-image-card";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
@@ -90,29 +91,34 @@ export default async function DishDetailPage({
           )}
         </div>
 
-        <div className="grid grid-cols-4 gap-4">
-          <div className="bg-muted p-4 rounded-lg">
-            <p className="text-sm text-muted-foreground">Rating</p>
-            <p className="text-3xl font-bold">{avgRating}</p>
-            <p className="text-xs text-muted-foreground">({reviews.length} reviews)</p>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="bg-muted p-4 rounded-lg space-y-4">
+            <div>
+              <p className="text-sm text-muted-foreground">Overall Rating</p>
+              <p className="text-3xl font-bold">{avgRating}</p>
+              <p className="text-xs text-muted-foreground">({reviews.length} {reviews.length === 1 ? "review" : "reviews"})</p>
+            </div>
+            {reviews.length > 0 && <RatingDistribution reviews={reviews} />}
           </div>
 
-          <div className="bg-muted p-4 rounded-lg">
-            <p className="text-sm text-muted-foreground">Price</p>
-            <p className="text-3xl font-bold">{dish.price ? `$${dish.price}` : "N/A"}</p>
-          </div>
+          <div className="space-y-4">
+            <div className="bg-muted p-4 rounded-lg">
+              <p className="text-sm text-muted-foreground">Price</p>
+              <p className="text-3xl font-bold">{dish.price ? `$${dish.price}` : "N/A"}</p>
+            </div>
 
-          <div className="bg-muted p-4 rounded-lg">
-            <p className="text-sm text-muted-foreground">Status</p>
-            <p className="text-3xl font-bold">Available</p>
-          </div>
+            <div className="bg-muted p-4 rounded-lg">
+              <p className="text-sm text-muted-foreground">Status</p>
+              <p className="text-3xl font-bold">Available</p>
+            </div>
 
-          <div className="bg-muted p-4 rounded-lg">
-            <p className="text-sm text-muted-foreground">Your Rating</p>
-            <p className="text-3xl font-bold">-</p>
-            <Button size="sm" variant="outline" className="mt-2 w-full" asChild>
-              <Link href={`/dish/${dish.id}/review`}>Add Review</Link>
-            </Button>
+            <div className="bg-muted p-4 rounded-lg">
+              <p className="text-sm text-muted-foreground">Your Rating</p>
+              <p className="text-3xl font-bold">-</p>
+              <Button size="sm" variant="outline" className="mt-2 w-full" asChild>
+                <Link href={`/dish/${dish.id}/review`}>Add Review</Link>
+              </Button>
+            </div>
           </div>
         </div>
 
