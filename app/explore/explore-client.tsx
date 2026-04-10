@@ -36,6 +36,7 @@ export default function ExploreClient() {
   const [isHalal, setIsHalal] = useState(
     searchParams.get("halal") === "true"
   );
+  const [minRating, setMinRating] = useState(searchParams.get("minRating") ?? "");
   const [location, setLocation] = useState(searchParams.get("location") ?? "");
   const [lat, setLat] = useState(searchParams.get("lat") ?? "");
   const [lon, setLon] = useState(searchParams.get("lon") ?? "");
@@ -56,6 +57,7 @@ export default function ExploreClient() {
     (minPrice ? 1 : 0) +
     (maxPrice ? 1 : 0) +
     (isHalal ? 1 : 0) +
+    (minRating ? 1 : 0) +
     (lat && lon ? 1 : 0);
 
   // Update URL when search/sort/filters change
@@ -79,6 +81,9 @@ export default function ExploreClient() {
     if (isHalal) {
       params.set("halal", "true");
     }
+    if (minRating) {
+      params.set("minRating", minRating);
+    }
     if (location) {
       params.set("location", location);
     }
@@ -91,7 +96,7 @@ export default function ExploreClient() {
     const queryString = params.toString();
     const newUrl = queryString ? `/explore?${queryString}` : "/explore";
     router.replace(newUrl);
-  }, [debouncedSearch, sort, cuisines, minPrice, maxPrice, isHalal, location, lat, lon, router]);
+  }, [debouncedSearch, sort, cuisines, minPrice, maxPrice, isHalal, minRating, location, lat, lon, router]);
 
   const {
     data,
@@ -109,6 +114,7 @@ export default function ExploreClient() {
       minPrice,
       maxPrice,
       isHalal,
+      minRating,
       lat,
       lon,
     ],
@@ -128,6 +134,9 @@ export default function ExploreClient() {
       }
       if (isHalal) {
         url += `&halal=true`;
+      }
+      if (minRating) {
+        url += `&minRating=${minRating}`;
       }
       if (lat) {
         url += `&latitude=${lat}`;
@@ -160,6 +169,7 @@ export default function ExploreClient() {
     setMinPrice("");
     setMaxPrice("");
     setIsHalal(false);
+    setMinRating("");
     setLocation("");
     setLat("");
     setLon("");
@@ -209,6 +219,8 @@ export default function ExploreClient() {
           onMaxPriceChange={setMaxPrice}
           isHalal={isHalal}
           onIsHalalChange={setIsHalal}
+          minRating={minRating}
+          onMinRatingChange={setMinRating}
           location={location}
           onLocationChange={setLocation}
           lat={lat}
@@ -252,6 +264,12 @@ export default function ExploreClient() {
           )}
           {isHalal && (
             <FilterChip label="Halal" onRemove={() => setIsHalal(false)} />
+          )}
+          {minRating && (
+            <FilterChip
+              label={`${minRating}★ and up`}
+              onRemove={() => setMinRating("")}
+            />
           )}
           {(lat || lon) && (
             <FilterChip

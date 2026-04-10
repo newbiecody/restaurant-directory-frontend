@@ -15,6 +15,8 @@ interface FilterPanelProps {
   onMaxPriceChange: (v: string) => void;
   isHalal: boolean;
   onIsHalalChange: (v: boolean) => void;
+  minRating: string;
+  onMinRatingChange: (v: string) => void;
   location: string;
   onLocationChange: (v: string) => void;
   lat: string;
@@ -33,6 +35,8 @@ export default function FilterPanel({
   onMaxPriceChange,
   isHalal,
   onIsHalalChange,
+  minRating,
+  onMinRatingChange,
   location,
   onLocationChange,
   lat,
@@ -105,6 +109,23 @@ export default function FilterPanel({
             min="0"
           />
         </div>
+      </div>
+
+      {/* Minimum rating */}
+      <div>
+        <p className="text-sm font-medium mb-2">Minimum Rating</p>
+        <select
+          value={minRating}
+          onChange={(e) => onMinRatingChange(e.target.value)}
+          className="w-full px-3 py-2 rounded-md border border-input bg-background text-sm transition-colors focus:outline-none focus:ring-2 focus:ring-ring"
+        >
+          <option value="">All ratings</option>
+          <option value="1">1★ and up</option>
+          <option value="2">2★ and up</option>
+          <option value="3">3★ and up</option>
+          <option value="4">4★ and up</option>
+          <option value="5">5★ only</option>
+        </select>
       </div>
 
       {/* Halal toggle */}
