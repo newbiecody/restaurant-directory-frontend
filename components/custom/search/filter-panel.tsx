@@ -2,6 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import LocationInput from "./location-input";
 import { CUISINE_OPTIONS } from "@/lib/constants/cuisines";
 import { cn } from "@/lib/utils";
 
@@ -14,6 +15,12 @@ interface FilterPanelProps {
   onMaxPriceChange: (v: string) => void;
   isHalal: boolean;
   onIsHalalChange: (v: boolean) => void;
+  location: string;
+  onLocationChange: (v: string) => void;
+  lat: string;
+  onLatChange: (v: string) => void;
+  lon: string;
+  onLonChange: (v: string) => void;
   onReset: () => void;
 }
 
@@ -26,10 +33,28 @@ export default function FilterPanel({
   onMaxPriceChange,
   isHalal,
   onIsHalalChange,
+  location,
+  onLocationChange,
+  lat,
+  onLatChange,
+  lon,
+  onLonChange,
   onReset,
 }: FilterPanelProps) {
   return (
     <div className="border rounded-lg p-4 space-y-4 bg-muted/30">
+      {/* Location */}
+      <LocationInput
+        location={location}
+        onLocationChange={onLocationChange}
+        lat={lat}
+        lon={lon}
+        onLocationSelect={(latitude, longitude) => {
+          onLatChange(latitude.toString());
+          onLonChange(longitude.toString());
+        }}
+      />
+
       {/* Cuisine chips */}
       <div>
         <p className="text-sm font-medium mb-2">Cuisine</p>

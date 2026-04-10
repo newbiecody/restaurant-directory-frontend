@@ -30,6 +30,9 @@ export default function ExploreClient() {
   const [isHalal, setIsHalal] = useState(
     searchParams.get("halal") === "true"
   );
+  const [location, setLocation] = useState(searchParams.get("location") ?? "");
+  const [lat, setLat] = useState(searchParams.get("lat") ?? "");
+  const [lon, setLon] = useState(searchParams.get("lon") ?? "");
   const [showFilters, setShowFilters] = useState(false);
 
   const debouncedSearch = useDebounce(searchTerm, 400);
@@ -40,6 +43,8 @@ export default function ExploreClient() {
     minPrice,
     maxPrice,
     isHalal,
+    lat,
+    lon,
   ].filter(Boolean).length;
 
   // Update URL when search/sort/filters change
@@ -63,10 +68,19 @@ export default function ExploreClient() {
     if (isHalal) {
       params.set("halal", "true");
     }
+    if (location) {
+      params.set("location", location);
+    }
+    if (lat) {
+      params.set("lat", lat);
+    }
+    if (lon) {
+      params.set("lon", lon);
+    }
     const queryString = params.toString();
     const newUrl = queryString ? `/explore?${queryString}` : "/explore";
     router.replace(newUrl);
-  }, [debouncedSearch, sort, cuisine, minPrice, maxPrice, isHalal, router]);
+  }, [debouncedSearch, sort, cuisine, minPrice, maxPrice, isHalal, location, lat, lon, router]);
 
   const {
     data,
@@ -84,6 +98,8 @@ export default function ExploreClient() {
       minPrice,
       maxPrice,
       isHalal,
+      lat,
+      lon,
     ],
     queryFn: async ({ pageParam = 0 }) => {
       let url = `/dishes?page=${pageParam}&size=12&sort=${sort}`;
@@ -101,6 +117,12 @@ export default function ExploreClient() {
       }
       if (isHalal) {
         url += `&halal=true`;
+      }
+      if (lat) {
+        url += `&latitude=${lat}`;
+      }
+      if (lon) {
+        url += `&longitude=${lon}`;
       }
       return api.get<SpringPageResponse<Dish[]>>(url);
     },
@@ -127,6 +149,9 @@ export default function ExploreClient() {
     setMinPrice("");
     setMaxPrice("");
     setIsHalal(false);
+    setLocation("");
+    setLat("");
+    setLon("");
     setShowFilters(false);
   };
 
@@ -166,6 +191,12 @@ export default function ExploreClient() {
           onMaxPriceChange={setMaxPrice}
           isHalal={isHalal}
           onIsHalalChange={setIsHalal}
+          location={location}
+          onLocationChange={setLocation}
+          lat={lat}
+          onLatChange={setLat}
+          lon={lon}
+          onLonChange={setLon}
           onReset={handleResetFilters}
         />
       )}
@@ -187,6 +218,16 @@ export default function ExploreClient() {
           )}
           {isHalal && (
             <FilterChip label="Halal" onRemove={() => setIsHalal(false)} />
+          )}
+          {(lat || lon) && (
+            <FilterChip
+              label={`📍 Near ${location || "your location"}`}
+              onRemove={() => {
+                setLocation("");
+                setLat("");
+                setLon("");
+              }}
+            />
           )}
         </div>
       )}
