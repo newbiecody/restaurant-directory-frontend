@@ -7,7 +7,7 @@ import type Activity from "@/types/activity.types";
 import ActivityCard from "@/components/activity/activity-card";
 
 interface UserActivitySectionProps {
-  userId: string;
+  userId: number;
 }
 
 export default function UserActivitySection({ userId }: UserActivitySectionProps) {

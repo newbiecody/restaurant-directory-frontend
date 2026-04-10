@@ -4,6 +4,7 @@ import "./globals.css";
 import { cn } from "@/lib/utils";
 import { Providers } from "@/components/providers";
 import NavBar from "@/components/custom/navbar/NavBar";
+import MSWProvider from "@/components/msw-provider";
 
 const quicksand = Quicksand({
   subsets: ["latin"],
@@ -27,10 +28,12 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <body className="bg-background text-foreground font-sans">
-        <Providers>
-          <NavBar />
-          <main className="max-w-7xl mx-auto px-4 py-6">{children}</main>
-        </Providers>
+        <MSWProvider>
+          <Providers>
+            <NavBar />
+            <main className="max-w-7xl mx-auto px-4 py-6">{children}</main>
+          </Providers>
+        </MSWProvider>
       </body>
     </html>
   );

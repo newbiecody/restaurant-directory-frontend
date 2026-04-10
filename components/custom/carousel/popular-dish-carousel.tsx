@@ -1,3 +1,5 @@
+"use client";
+
 import Carousel from "./custom-carousel";
 import type Dish from "@/types/dish.types";
 import BookmarkableImageCard from "../image-card/bookmarkable-image-card";

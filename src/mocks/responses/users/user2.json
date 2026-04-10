@@ -1,0 +1,9 @@
+{
+  "id": 2,
+  "username": "Taco Tornado",
+  "email": "tacotornado@whereto.com",
+  "isAdmin": false,
+  "createdAt": "2025-08-10T09:22:15.120",
+  "picture": "https://static.wikia.nocookie.net/characters/images/4/42/Mickey_Mouse_%28character%29.png/revision/latest?cb=20230508142819",
+  "bio": "Passionate foodie on a mission to eat tacos in every city. Spicy food enthusiast, amateur chef, and full-time flavor chaser."
+}

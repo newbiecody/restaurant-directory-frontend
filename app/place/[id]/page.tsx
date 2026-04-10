@@ -56,8 +56,15 @@ export default async function RestaurantProfilePage({
           )}
           <div className="flex-1">
             <div className="flex items-start justify-between">
-              <div>
-                <h1 className="text-3xl font-bold">{restaurant.name}</h1>
+              <div className="flex-1">
+                <div className="flex items-center gap-2">
+                  <h1 className="text-3xl font-bold">{restaurant.name}</h1>
+                  {restaurant.isHalal && (
+                    <span className="inline-block px-2 py-1 bg-green-100 text-green-800 text-xs font-semibold rounded">
+                      🕌 Halal
+                    </span>
+                  )}
+                </div>
                 {restaurant.cuisine && (
                   <p className="text-sm text-muted-foreground mt-2">
                     Cuisine: {restaurant.cuisine}
@@ -66,15 +73,34 @@ export default async function RestaurantProfilePage({
                 <p className="text-sm text-muted-foreground mt-1">
                   {restaurant.address}
                 </p>
-              </div>
-              {restaurant.rating && (
-                <div className="text-right">
-                  <p className="text-2xl font-bold text-yellow-600">
-                    ★ {restaurant.rating}
+                {restaurant.openingHours && (
+                  <p className="text-sm text-muted-foreground mt-1">
+                    Hours: {restaurant.openingHours}
                   </p>
-                  <p className="text-xs text-muted-foreground">Rating</p>
-                </div>
-              )}
+                )}
+              </div>
+              <div className="text-right">
+                {restaurant.averageRating && (
+                  <div>
+                    <p className="text-2xl font-bold text-yellow-600">
+                      ★ {restaurant.averageRating}
+                    </p>
+                    {restaurant.totalReviews && (
+                      <p className="text-xs text-muted-foreground">
+                        {restaurant.totalReviews} reviews
+                      </p>
+                    )}
+                  </div>
+                )}
+                {restaurant.rating && !restaurant.averageRating && (
+                  <div>
+                    <p className="text-2xl font-bold text-yellow-600">
+                      ★ {restaurant.rating}
+                    </p>
+                    <p className="text-xs text-muted-foreground">Rating</p>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
         </div>

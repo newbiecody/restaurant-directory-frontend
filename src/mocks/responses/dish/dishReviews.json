@@ -1,0 +1,72 @@
+{
+  "content": [
+    {
+      "id": 501,
+      "place_id": 101,
+      "user": {
+        "id": 301,
+        "username": "Jane Doe",
+        "picture": "https://media.istockphoto.com/id/1433432507/photo/healthy-eating-plate-with-vegan-or-vegetarian-food-in-woman-hands-healthy-plant-based-diet.jpg?s=1024x1024&w=is&k=20&c=JUZhSJ-5rTsJgUdK_3V49HTmSe7_G8ckaUejdWxjsgY="
+      },
+      "rating": 5,
+      "comment": "Absolutely divine! The pasta was perfectly al dente and the sauce was creamy and flavorful without being too heavy. Best Carbonara I've had outside of Rome. Highly recommend!",
+      "created_at": "2025-10-02T14:35:00Z",
+      "reviewPhotos": [
+        {
+          "photoId": 201,
+          "reviewId": 501,
+          "photoUrl": "https://media.istockphoto.com/id/1433432507/photo/healthy-eating-plate-with-vegan-or-vegetarian-food-in-woman-hands-healthy-plant-based-diet.jpg?s=1024x1024&w=is&k=20&c=JUZhSJ-5rTsJgUdK_3V49HTmSe7_G8ckaUejdWxjsgY=",
+          "uploadedAt": "2025-10-02T14:36:00Z"
+        }
+      ],
+      "reviewVotes": [
+        {
+          "voteId": 401,
+          "reviewId": 501,
+          "userId": 999,
+          "voteType": "upvote",
+          "votedAt": "2025-10-03T09:00:00Z"
+        }
+      ]
+    },
+    {
+      "id": 502,
+      "place_id": 101,
+      "user": {
+        "id": 302,
+        "username": "John Smith",
+        "picture": "https://example.com/avatars/john.jpg"
+      },
+      "rating": 4,
+      "comment": "A very solid dish. The ingredients were fresh and the presentation was beautiful. It was a little saltier than I prefer, but overall a great experience.",
+      "created_at": "2025-09-27T10:12:00Z",
+      "reviewPhotos": [],
+      "reviewVotes": []
+    }
+  ],
+  "pageable": {
+    "pageNumber": 0,
+    "pageSize": 10,
+    "sort": {
+      "empty": false,
+      "sorted": true,
+      "unsorted": false
+    },
+    "offset": 0,
+    "paged": true,
+    "unpaged": false
+  },
+  "totalPages": 1,
+  "totalElements": 2,
+  "last": true,
+  "size": 10,
+  "number": 0,
+  "sort": {
+    "empty": false,
+    "sorted": true,
+    "unsorted": false
+  },
+  "numberOfElements": 2,
+  "first": true,
+  "empty": false
+}
