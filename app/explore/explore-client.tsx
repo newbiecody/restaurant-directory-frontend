@@ -9,7 +9,9 @@ import type Dish from "@/types/dish.types";
 import { useDebounce } from "@/hooks/use-debounce";
 import SearchInput from "@/components/custom/search/search-input";
 import SortSelect from "@/components/custom/search/sort-select";
+import FilterPanel from "@/components/custom/search/filter-panel";
 import DetailedImageCard from "@/components/custom/image-card/detailed-image-card";
+import { Button } from "@/components/ui/button";
 
 export default function ExploreClient() {
   const router = useRouter();
@@ -22,10 +24,25 @@ export default function ExploreClient() {
   const [sort, setSort] = useState(
     searchParams.get("sort") ?? "simpleRating,desc"
   );
+  const [cuisine, setCuisine] = useState(searchParams.get("cuisine") ?? "");
+  const [minPrice, setMinPrice] = useState(searchParams.get("minPrice") ?? "");
+  const [maxPrice, setMaxPrice] = useState(searchParams.get("maxPrice") ?? "");
+  const [isHalal, setIsHalal] = useState(
+    searchParams.get("halal") === "true"
+  );
+  const [showFilters, setShowFilters] = useState(false);
 
   const debouncedSearch = useDebounce(searchTerm, 400);
 
-  // Update URL when search/sort changes
+  // Calculate active filter count
+  const activeFilterCount = [
+    cuisine,
+    minPrice,
+    maxPrice,
+    isHalal,
+  ].filter(Boolean).length;
+
+  // Update URL when search/sort/filters change
   useEffect(() => {
     const params = new URLSearchParams();
     if (debouncedSearch) {
@@ -34,10 +51,22 @@ export default function ExploreClient() {
     if (sort !== "simpleRating,desc") {
       params.set("sort", sort);
     }
+    if (cuisine) {
+      params.set("cuisine", cuisine);
+    }
+    if (minPrice) {
+      params.set("minPrice", minPrice);
+    }
+    if (maxPrice) {
+      params.set("maxPrice", maxPrice);
+    }
+    if (isHalal) {
+      params.set("halal", "true");
+    }
     const queryString = params.toString();
     const newUrl = queryString ? `/explore?${queryString}` : "/explore";
     router.replace(newUrl);
-  }, [debouncedSearch, sort, router]);
+  }, [debouncedSearch, sort, cuisine, minPrice, maxPrice, isHalal, router]);
 
   const {
     data,
@@ -46,11 +75,32 @@ export default function ExploreClient() {
     hasNextPage,
     fetchNextPage,
   } = useInfiniteQuery({
-    queryKey: ["dishes", "explore", debouncedSearch, sort],
+    queryKey: [
+      "dishes",
+      "explore",
+      debouncedSearch,
+      sort,
+      cuisine,
+      minPrice,
+      maxPrice,
+      isHalal,
+    ],
     queryFn: async ({ pageParam = 0 }) => {
       let url = `/dishes?page=${pageParam}&size=12&sort=${sort}`;
       if (debouncedSearch) {
         url += `&name=${encodeURIComponent(debouncedSearch)}`;
+      }
+      if (cuisine) {
+        url += `&cuisine=${encodeURIComponent(cuisine)}`;
+      }
+      if (minPrice) {
+        url += `&minPrice=${minPrice}`;
+      }
+      if (maxPrice) {
+        url += `&maxPrice=${maxPrice}`;
+      }
+      if (isHalal) {
+        url += `&halal=true`;
       }
       return api.get<SpringPageResponse<Dish[]>>(url);
     },
@@ -72,6 +122,14 @@ export default function ExploreClient() {
     );
   }
 
+  const handleResetFilters = () => {
+    setCuisine("");
+    setMinPrice("");
+    setMaxPrice("");
+    setIsHalal(false);
+    setShowFilters(false);
+  };
+
   return (
     <div className="space-y-6">
       {/* Search and Sort Controls */}
@@ -83,7 +141,55 @@ export default function ExploreClient() {
           disabled={isLoading}
         />
         <SortSelect value={sort} onChange={setSort} disabled={isLoading} />
+        <Button
+          variant="outline"
+          onClick={() => setShowFilters(!showFilters)}
+          disabled={isLoading}
+        >
+          Filters
+          {activeFilterCount > 0 && (
+            <span className="ml-2 inline-flex items-center justify-center w-5 h-5 rounded-full bg-orange-600 text-white text-xs font-medium">
+              {activeFilterCount}
+            </span>
+          )}
+        </Button>
       </div>
+
+      {/* Filter Panel */}
+      {showFilters && (
+        <FilterPanel
+          cuisine={cuisine}
+          onCuisineChange={setCuisine}
+          minPrice={minPrice}
+          onMinPriceChange={setMinPrice}
+          maxPrice={maxPrice}
+          onMaxPriceChange={setMaxPrice}
+          isHalal={isHalal}
+          onIsHalalChange={setIsHalal}
+          onReset={handleResetFilters}
+        />
+      )}
+
+      {/* Active Filter Chips */}
+      {activeFilterCount > 0 && (
+        <div className="flex flex-wrap gap-2">
+          {cuisine && (
+            <FilterChip label={cuisine} onRemove={() => setCuisine("")} />
+          )}
+          {(minPrice || maxPrice) && (
+            <FilterChip
+              label={`$${minPrice || "0"} – $${maxPrice || "∞"}`}
+              onRemove={() => {
+                setMinPrice("");
+                setMaxPrice("");
+              }}
+            />
+          )}
+          {isHalal && (
+            <FilterChip label="Halal" onRemove={() => setIsHalal(false)} />
+          )}
+        </div>
+      )}
 
       {/* Result Count */}
       {!isLoading && (
@@ -157,5 +263,25 @@ export default function ExploreClient() {
         </div>
       )}
     </div>
+  );
+}
+
+function FilterChip({
+  label,
+  onRemove,
+}: {
+  label: string;
+  onRemove: () => void;
+}) {
+  return (
+    <span className="flex items-center gap-1 px-2 py-1 rounded-full bg-orange-100 text-orange-800 text-xs font-medium">
+      {label}
+      <button
+        onClick={onRemove}
+        className="hover:text-orange-600 ml-1 font-bold"
+      >
+        ✕
+      </button>
+    </span>
   );
 }
