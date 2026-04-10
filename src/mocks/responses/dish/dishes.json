@@ -1,0 +1,90 @@
+{
+  "content": [
+    {
+      "id": 1,
+      "restaurantId": 101,
+      "name": "Signature Laksa",
+      "description": "Spicy coconut noodle soup with shrimp and egg",
+      "price": 18.99,
+      "simpleRating": 4.8,
+      "reviewPhotos": [
+        {
+          "photoId": 1,
+          "reviewId": 501,
+          "photoUrl": "https://media.istockphoto.com/id/1433432507/photo/healthy-eating-plate-with-vegan-or-vegetarian-food-in-woman-hands-healthy-plant-based-diet.jpg?s=1024x1024&w=is&k=20&c=JUZhSJ-5rTsJgUdK_3V49HTmSe7_G8ckaUejdWxjsgY=",
+          "uploadedAt": "2025-10-02T14:36:00Z"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "restaurantId": 101,
+      "name": "Hainanese Chicken Rice",
+      "description": "Poached chicken with fragrant rice and ginger sauce",
+      "price": 14.50,
+      "simpleRating": 4.6,
+      "reviewPhotos": []
+    },
+    {
+      "id": 3,
+      "restaurantId": 102,
+      "name": "Pad Thai",
+      "description": "Stir-fried rice noodles with shrimp and peanuts",
+      "price": 16.00,
+      "simpleRating": 4.5,
+      "reviewPhotos": []
+    },
+    {
+      "id": 4,
+      "restaurantId": 102,
+      "name": "Green Curry",
+      "description": "Fragrant green curry with chicken and basil",
+      "price": 17.50,
+      "simpleRating": 4.7,
+      "reviewPhotos": []
+    },
+    {
+      "id": 5,
+      "restaurantId": 103,
+      "name": "Beef Rendang",
+      "description": "Slow-cooked beef in rich coconut and spice paste",
+      "price": 19.99,
+      "simpleRating": 4.9,
+      "reviewPhotos": []
+    },
+    {
+      "id": 6,
+      "restaurantId": 103,
+      "name": "Satay Chicken",
+      "description": "Grilled chicken skewers with peanut sauce",
+      "price": 15.00,
+      "simpleRating": 4.4,
+      "reviewPhotos": []
+    }
+  ],
+  "pageable": {
+    "pageNumber": 0,
+    "pageSize": 12,
+    "sort": {
+      "sorted": true,
+      "unsorted": false,
+      "empty": false
+    },
+    "offset": 0,
+    "paged": true,
+    "unpaged": false
+  },
+  "totalPages": 3,
+  "totalElements": 18,
+  "last": false,
+  "first": true,
+  "numberOfElements": 6,
+  "size": 12,
+  "number": 0,
+  "sort": {
+    "sorted": true,
+    "unsorted": false,
+    "empty": false
+  },
+  "empty": false
+}

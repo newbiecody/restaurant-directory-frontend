@@ -1,26 +1,23 @@
 import type ReviewPhoto from "./photo.types";
 
-export interface ReviewVote {
+export interface ReviewUser {
   id: number;
+  username: string;
+  picture: string;
+}
+
+export interface ReviewVote {
+  voteId: number;
   reviewId: number;
   userId: number;
-  voteType: 1 | -1;
-  createdAt: string;
+  voteType: string;
+  votedAt: string;
 }
 
 export default interface Review {
   id: number;
   place_id: number;
-  user: {
-    id: string;
-    username: string;
-    email: string;
-    isAdmin: boolean;
-    createdAt: string;
-    picture: string;
-    googleId: string;
-    bio: string;
-  };
+  user: ReviewUser;
   rating: number;
   comment: string;
   created_at: string;

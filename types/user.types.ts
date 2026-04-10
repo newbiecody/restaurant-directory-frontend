@@ -1,10 +1,10 @@
 export default interface User {
-  id: string;
+  id: number;
   username: string;
   email: string;
   isAdmin: boolean;
   createdAt: string;
   picture: string;
-  googleId: string;
-  bio: string;
+  googleId?: string;
+  bio?: string;
 }

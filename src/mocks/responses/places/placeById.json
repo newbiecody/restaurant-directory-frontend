@@ -1,0 +1,16 @@
+{
+  "id": 101,
+  "name": "Ah Heng Chicken Rice",
+  "address": "42 Jalan Besar, Singapore 209086",
+  "cuisine": "Chinese",
+  "isHalal": false,
+  "lat": 1.3096,
+  "lon": 103.8554,
+  "openingHours": "Mon–Sun 10:00–20:30",
+  "createdAt": "2024-06-23T20:14:37.461741",
+  "updatedAt": "2025-01-15T10:30:00.000000",
+  "status": "ACTIVE",
+  "distance": 1.2,
+  "totalReviews": 128,
+  "averageRating": 4.3
+}

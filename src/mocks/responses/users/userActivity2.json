@@ -1,0 +1,133 @@
+{
+  "content": [
+    {
+      "id": 1,
+      "actor": {
+        "id": 201,
+        "username": "taco_tornado",
+        "avatarUrl": "https://example.com/avatars/taco_tornado.jpg"
+      },
+      "subject": {
+        "type": "USER",
+        "id": 201,
+        "name": "Taco Tornado"
+      },
+      "actionType": "USER_UPDATED",
+      "metaData": {
+        "field": "email",
+        "oldValue": "old_taco@whereto.com",
+        "newValue": "tacotornado@whereto.com"
+      },
+      "createdAt": "2025-08-10T09:30:00Z"
+    },
+    {
+      "id": 2,
+      "actor": {
+        "id": 204,
+        "username": "burger_baron",
+        "avatarUrl": "https://example.com/avatars/burger_baron.jpg"
+      },
+      "subject": {
+        "type": "DISH",
+        "id": 601,
+        "name": "Classic Cheeseburger"
+      },
+      "actionType": "REVIEW_CREATED",
+      "metaData": {
+        "restaurantName": "Baron's Burgers",
+        "restaurantId": 301,
+        "rating": 5,
+        "reviewText": "Juicy, perfectly seasoned, and the brioche bun was on point.",
+        "dishId": "601"
+      },
+      "createdAt": "2025-08-10T11:00:00Z"
+    },
+    {
+      "id": 3,
+      "actor": {
+        "id": 206,
+        "username": "chef_marco",
+        "avatarUrl": "https://example.com/avatars/marco.jpg"
+      },
+      "subject": {
+        "type": "DISH",
+        "id": 603,
+        "name": "Lobster Bisque"
+      },
+      "actionType": "DISH_CREATED",
+      "metaData": {
+        "dishName": "Lobster Bisque",
+        "restaurantId": "303",
+        "category": "Seafood"
+      },
+      "createdAt": "2025-08-10T13:00:00Z"
+    },
+    {
+      "id": 4,
+      "actor": {
+        "id": 209,
+        "username": "owner_diana",
+        "avatarUrl": "https://example.com/avatars/diana.jpg"
+      },
+      "subject": {
+        "type": "PLACE",
+        "id": 304,
+        "name": "Diana's Dim Sum"
+      },
+      "actionType": "RESTAURANT_CREATED",
+      "metaData": {
+        "restaurantName": "Diana's Dim Sum",
+        "address": "88 Jade Street, San Francisco, CA",
+        "cuisine": "Chinese"
+      },
+      "createdAt": "2025-08-11T09:00:00Z"
+    },
+    {
+      "id": 5,
+      "actor": {
+        "id": 210,
+        "username": "dim_sum_devotee",
+        "avatarUrl": "https://example.com/avatars/dim_sum_devotee.jpg"
+      },
+      "subject": {
+        "type": "DISH",
+        "id": 605,
+        "name": "Har Gow"
+      },
+      "actionType": "REVIEW_CREATED",
+      "metaData": {
+        "restaurantName": "Diana's Dim Sum",
+        "restaurantId": "304",
+        "rating": "5",
+        "reviewText": "Delicate wrappers and the most flavorful shrimp filling I've tasted.",
+        "dishId": "605"
+      },
+      "createdAt": "2025-08-11T11:00:00Z"
+    }
+  ],
+  "pageable": {
+    "sort": {
+      "empty": false,
+      "sorted": true,
+      "unsorted": false
+    },
+    "offset": 0,
+    "pageNumber": 0,
+    "pageSize": 10,
+    "paged": true,
+    "unpaged": false
+  },
+  "last": true,
+  "totalPages": 1,
+  "totalElements": 5,
+  "size": 10,
+  "number": 0,
+  "sort": {
+    "empty": false,
+    "sorted": true,
+    "unsorted": false
+  },
+  "first": true,
+  "numberOfElements": 5,
+  "empty": false
+}

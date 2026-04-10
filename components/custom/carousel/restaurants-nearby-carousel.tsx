@@ -1,3 +1,5 @@
+"use client";
+
 import CustomCarousel from "./custom-carousel";
 import type Restaurant from "@/types/restaurant.types";
 

@@ -1,0 +1,51 @@
+{
+  "content": [
+    {
+      "id": "post-001",
+      "author": {
+        "id": "user-42",
+        "username": "jane_doe",
+        "displayName": "Jane Doe",
+        "avatarUrl": "https://cdn.foodiefinds.com/avatars/jane_doe.jpg"
+      },
+      "subject": "Great place! Yummy!",
+      "excerpt": "This place was absolutely fantastic! The pasta was homemade and the sauce was to die for...",
+      "likeCount": 12,
+      "commentCount": 4,
+      "shareCount": 2,
+      "createdAt": "2024-01-15T10:30:00Z"
+    },
+    {
+      "id": "post-002",
+      "author": {
+        "id": "user-17",
+        "username": "maria",
+        "displayName": "Maria",
+        "avatarUrl": "https://cdn.foodiefinds.com/avatars/maria.jpg"
+      },
+      "subject": "Look at all these yummy stuff!",
+      "excerpt": "Just had to share these amazing shots from my dinner last night...",
+      "likeCount": 28,
+      "commentCount": 9,
+      "shareCount": 5,
+      "createdAt": "2024-01-14T20:15:00Z"
+    }
+  ],
+  "pageable": {
+    "pageNumber": 0,
+    "pageSize": 10,
+    "sort": { "sorted": true, "unsorted": false, "empty": false },
+    "offset": 0,
+    "paged": true,
+    "unpaged": false
+  },
+  "totalElements": 2,
+  "totalPages": 1,
+  "last": true,
+  "first": true,
+  "numberOfElements": 2,
+  "size": 10,
+  "number": 0,
+  "sort": { "sorted": true, "unsorted": false, "empty": false },
+  "empty": false
+}

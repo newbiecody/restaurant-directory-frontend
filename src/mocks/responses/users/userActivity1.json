@@ -1,0 +1,133 @@
+{
+  "content": [
+    {
+      "id": 1,
+      "actor": {
+        "id": 101,
+        "username": "john_doe",
+        "avatarUrl": "https://example.com/avatars/john_doe.jpg"
+      },
+      "subject": {
+        "type": "USER",
+        "id": 101,
+        "name": "John Doe"
+      },
+      "actionType": "USER_UPDATED",
+      "metaData": {
+        "field": "email",
+        "oldValue": "john@old.com",
+        "newValue": "john@new.com"
+      },
+      "createdAt": "2024-01-15T10:30:00Z"
+    },
+    {
+      "id": 2,
+      "actor": {
+        "id": 104,
+        "username": "foodie_jane",
+        "avatarUrl": "https://example.com/avatars/jane.jpg"
+      },
+      "subject": {
+        "type": "DISH",
+        "id": 501,
+        "name": "Margherita Pizza"
+      },
+      "actionType": "REVIEW_CREATED",
+      "metaData": {
+        "restaurantName": "PizzaHaus",
+        "restaurantId": 202,
+        "rating": 5,
+        "reviewText": "Absolutely delicious! Best pizza in town.",
+        "dishId": "501"
+      },
+      "createdAt": "2024-01-15T12:15:00Z"
+    },
+    {
+      "id": 3,
+      "actor": {
+        "id": 106,
+        "username": "chef_alice",
+        "avatarUrl": "https://example.com/avatars/alice.jpg"
+      },
+      "subject": {
+        "type": "DISH",
+        "id": 503,
+        "name": "Truffle Pasta"
+      },
+      "actionType": "DISH_CREATED",
+      "metaData": {
+        "dishName": "Truffle Pasta",
+        "restaurantId": "201",
+        "category": "Italian"
+      },
+      "createdAt": "2024-01-15T15:00:00Z"
+    },
+    {
+      "id": 4,
+      "actor": {
+        "id": 109,
+        "username": "owner_mike",
+        "avatarUrl": "https://example.com/avatars/mike.jpg"
+      },
+      "subject": {
+        "type": "PLACE",
+        "id": 204,
+        "name": "Mike's Grill House"
+      },
+      "actionType": "RESTAURANT_CREATED",
+      "metaData": {
+        "restaurantName": "Mike's Grill House",
+        "address": "123 Main St, New York, NY",
+        "cuisine": "American"
+      },
+      "createdAt": "2024-01-15T21:00:00Z"
+    },
+    {
+      "id": 5,
+      "actor": {
+        "id": 114,
+        "username": "critic_james",
+        "avatarUrl": "https://example.com/avatars/james.jpg"
+      },
+      "subject": {
+        "type": "DISH",
+        "id": 505,
+        "name": "Sushi Platter"
+      },
+      "actionType": "REVIEW_CREATED",
+      "metaData": {
+        "restaurantName": "Sam's Korean BBQ",
+        "restaurantId": "206",
+        "rating": "3",
+        "reviewText": "Decent sushi but rice was too warm",
+        "dishId": "505"
+      },
+      "createdAt": "2024-01-16T12:00:00Z"
+    }
+  ],
+  "pageable": {
+    "sort": {
+      "empty": false,
+      "sorted": true,
+      "unsorted": false
+    },
+    "offset": 0,
+    "pageNumber": 0,
+    "pageSize": 10,
+    "paged": true,
+    "unpaged": false
+  },
+  "last": true,
+  "totalPages": 1,
+  "totalElements": 5,
+  "size": 10,
+  "number": 0,
+  "sort": {
+    "empty": false,
+    "sorted": true,
+    "unsorted": false
+  },
+  "first": true,
+  "numberOfElements": 5,
+  "empty": false
+}
