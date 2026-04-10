@@ -6,6 +6,7 @@ import type Restaurant from "@/types/restaurant.types";
 import { SpringPageResponse } from "@/types/spring.types";
 import ReviewsClient from "./reviews-client";
 import DishInteractiveSection from "@/components/dish/dish-interactive-section";
+import BookmarkableImageCard from "@/components/custom/image-card/bookmarkable-image-card";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 
@@ -36,6 +37,18 @@ async function fetchRestaurant(restaurantId: number) {
   }
 }
 
+async function fetchSuggestedDishes(restaurantId: number, currentDishId: number) {
+  try {
+    const response = await api.get<SpringPageResponse<Dish[]>>(
+      `/dishes?restaurantId=${restaurantId}&page=0&size=6&sort=simpleRating,desc`
+    );
+    // Filter out the current dish
+    return (response.content || []).filter((d) => d.id !== currentDishId);
+  } catch {
+    return [];
+  }
+}
+
 export default async function DishDetailPage({
   params,
 }: {
@@ -51,7 +64,10 @@ export default async function DishDetailPage({
     notFound();
   }
 
-  const restaurant = await fetchRestaurant(dish.restaurantId);
+  const [restaurant, suggestedDishes] = await Promise.all([
+    fetchRestaurant(dish.restaurantId),
+    fetchSuggestedDishes(dish.restaurantId, dish.id),
+  ]);
 
   const avgRating =
     reviews.length > 0
@@ -109,6 +125,46 @@ export default async function DishDetailPage({
         <h2 className="text-2xl font-bold">Reviews</h2>
         <ReviewsClient reviews={reviews} dishId={dish.id} />
       </div>
+
+      {suggestedDishes.length > 0 && (
+        <div className="space-y-4">
+          <h2 className="text-2xl font-bold">More from {restaurant?.name}</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {suggestedDishes.map((suggestedDish) => (
+              <BookmarkableImageCard
+                key={suggestedDish.id}
+                src={
+                  suggestedDish.reviewPhotos?.[0]?.photoUrl ??
+                  "/placeholder-dish.jpg"
+                }
+                alt={suggestedDish.name}
+                title={suggestedDish.name}
+                href={`/dish/${suggestedDish.id}`}
+                dishId={suggestedDish.id}
+                footer={
+                  <div className="space-y-1 text-xs">
+                    {suggestedDish.description && (
+                      <p className="text-muted-foreground line-clamp-1">
+                        {suggestedDish.description}
+                      </p>
+                    )}
+                    <div className="flex justify-between">
+                      {suggestedDish.price && (
+                        <span className="font-semibold">${suggestedDish.price}</span>
+                      )}
+                      {suggestedDish.simpleRating && (
+                        <span className="text-yellow-600">
+                          ★ {suggestedDish.simpleRating}
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                }
+              />
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   );
 }
