@@ -7,8 +7,8 @@ import { CUISINE_OPTIONS } from "@/lib/constants/cuisines";
 import { cn } from "@/lib/utils";
 
 interface FilterPanelProps {
-  cuisine: string;
-  onCuisineChange: (v: string) => void;
+  cuisines: string[];
+  onCuisinesChange: (v: string[]) => void;
   minPrice: string;
   onMinPriceChange: (v: string) => void;
   maxPrice: string;
@@ -25,8 +25,8 @@ interface FilterPanelProps {
 }
 
 export default function FilterPanel({
-  cuisine,
-  onCuisineChange,
+  cuisines,
+  onCuisinesChange,
   minPrice,
   onMinPriceChange,
   maxPrice,
@@ -41,6 +41,13 @@ export default function FilterPanel({
   onLonChange,
   onReset,
 }: FilterPanelProps) {
+  const toggleCuisine = (cuisine: string) => {
+    if (cuisines.includes(cuisine)) {
+      onCuisinesChange(cuisines.filter((c) => c !== cuisine));
+    } else {
+      onCuisinesChange([...cuisines, cuisine]);
+    }
+  };
   return (
     <div className="border rounded-lg p-4 space-y-4 bg-muted/30">
       {/* Location */}
@@ -57,15 +64,15 @@ export default function FilterPanel({
 
       {/* Cuisine chips */}
       <div>
-        <p className="text-sm font-medium mb-2">Cuisine</p>
+        <p className="text-sm font-medium mb-2">Cuisines</p>
         <div className="flex flex-wrap gap-2">
           {CUISINE_OPTIONS.map((c) => (
             <button
               key={c}
-              onClick={() => onCuisineChange(cuisine === c ? "" : c)}
+              onClick={() => toggleCuisine(c)}
               className={cn(
                 "px-3 py-1 rounded-full text-sm border transition-colors",
-                cuisine === c
+                cuisines.includes(c)
                   ? "bg-orange-600 text-white border-orange-600"
                   : "border-muted-foreground hover:border-orange-600"
               )}

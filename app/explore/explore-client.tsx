@@ -24,7 +24,9 @@ export default function ExploreClient() {
   const [sort, setSort] = useState(
     searchParams.get("sort") ?? "simpleRating,desc"
   );
-  const [cuisine, setCuisine] = useState(searchParams.get("cuisine") ?? "");
+  const [cuisines, setCuisines] = useState<string[]>(
+    searchParams.get("cuisines")?.split(",").filter(Boolean) ?? []
+  );
   const [minPrice, setMinPrice] = useState(searchParams.get("minPrice") ?? "");
   const [maxPrice, setMaxPrice] = useState(searchParams.get("maxPrice") ?? "");
   const [isHalal, setIsHalal] = useState(
@@ -38,14 +40,12 @@ export default function ExploreClient() {
   const debouncedSearch = useDebounce(searchTerm, 400);
 
   // Calculate active filter count
-  const activeFilterCount = [
-    cuisine,
-    minPrice,
-    maxPrice,
-    isHalal,
-    lat,
-    lon,
-  ].filter(Boolean).length;
+  const activeFilterCount =
+    cuisines.length +
+    (minPrice ? 1 : 0) +
+    (maxPrice ? 1 : 0) +
+    (isHalal ? 1 : 0) +
+    (lat && lon ? 1 : 0);
 
   // Update URL when search/sort/filters change
   useEffect(() => {
@@ -56,8 +56,8 @@ export default function ExploreClient() {
     if (sort !== "simpleRating,desc") {
       params.set("sort", sort);
     }
-    if (cuisine) {
-      params.set("cuisine", cuisine);
+    if (cuisines.length > 0) {
+      params.set("cuisines", cuisines.join(","));
     }
     if (minPrice) {
       params.set("minPrice", minPrice);
@@ -80,7 +80,7 @@ export default function ExploreClient() {
     const queryString = params.toString();
     const newUrl = queryString ? `/explore?${queryString}` : "/explore";
     router.replace(newUrl);
-  }, [debouncedSearch, sort, cuisine, minPrice, maxPrice, isHalal, location, lat, lon, router]);
+  }, [debouncedSearch, sort, cuisines, minPrice, maxPrice, isHalal, location, lat, lon, router]);
 
   const {
     data,
@@ -94,7 +94,7 @@ export default function ExploreClient() {
       "explore",
       debouncedSearch,
       sort,
-      cuisine,
+      ...cuisines,
       minPrice,
       maxPrice,
       isHalal,
@@ -106,9 +106,9 @@ export default function ExploreClient() {
       if (debouncedSearch) {
         url += `&name=${encodeURIComponent(debouncedSearch)}`;
       }
-      if (cuisine) {
+      cuisines.forEach((cuisine) => {
         url += `&cuisine=${encodeURIComponent(cuisine)}`;
-      }
+      });
       if (minPrice) {
         url += `&minPrice=${minPrice}`;
       }
@@ -145,7 +145,7 @@ export default function ExploreClient() {
   }
 
   const handleResetFilters = () => {
-    setCuisine("");
+    setCuisines([]);
     setMinPrice("");
     setMaxPrice("");
     setIsHalal(false);
@@ -183,8 +183,8 @@ export default function ExploreClient() {
       {/* Filter Panel */}
       {showFilters && (
         <FilterPanel
-          cuisine={cuisine}
-          onCuisineChange={setCuisine}
+          cuisines={cuisines}
+          onCuisinesChange={setCuisines}
           minPrice={minPrice}
           onMinPriceChange={setMinPrice}
           maxPrice={maxPrice}
@@ -204,9 +204,15 @@ export default function ExploreClient() {
       {/* Active Filter Chips */}
       {activeFilterCount > 0 && (
         <div className="flex flex-wrap gap-2">
-          {cuisine && (
-            <FilterChip label={cuisine} onRemove={() => setCuisine("")} />
-          )}
+          {cuisines.map((cuisine) => (
+            <FilterChip
+              key={cuisine}
+              label={cuisine}
+              onRemove={() =>
+                setCuisines(cuisines.filter((c) => c !== cuisine))
+              }
+            />
+          ))}
           {(minPrice || maxPrice) && (
             <FilterChip
               label={`$${minPrice || "0"} – $${maxPrice || "∞"}`}
