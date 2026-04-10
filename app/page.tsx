@@ -2,6 +2,7 @@ import api from "@/lib/api";
 import type { SpringPageResponse } from "@/types/spring.types";
 import type Dish from "@/types/dish.types";
 import { DishCatalogSection } from "@/components/custom/carousel/popular-dish-carousel";
+import { TrendingDishesSection } from "@/components/custom/sections/trending-dishes-section";
 import GreetingSection from "./greeting-section";
 import HeroSearch from "./hero-search";
 
@@ -23,6 +24,7 @@ export default async function HomePage() {
     <div className="space-y-8">
       <GreetingSection />
       <HeroSearch />
+      <TrendingDishesSection />
 
       {dishes.length > 0 && (
         <>
