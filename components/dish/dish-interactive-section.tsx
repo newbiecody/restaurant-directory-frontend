@@ -5,7 +5,7 @@ import { Heart, Share } from "@phosphor-icons/react/ssr";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import api from "@/lib/api";
-import { useRequireAuth } from "@/hooks/use-require-auth";
+import { useUser } from "@/context/user-context";
 
 interface DishInteractiveSectionProps {
   dishId: number;
@@ -16,7 +16,7 @@ export default function DishInteractiveSection({
   dishId,
   dishName,
 }: DishInteractiveSectionProps) {
-  const { user } = useRequireAuth();
+  const { user } = useUser();
   const [isBookmarked, setIsBookmarked] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 

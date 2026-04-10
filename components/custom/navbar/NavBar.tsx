@@ -45,11 +45,13 @@ function NavBar() {
           Yums!
         </Link>
         <div className="flex items-center gap-2">
-          <Link href="/blog/new" className="md:hidden">
-            <Button className="shadow" size="sm">
-              New Blog Post
-            </Button>
-          </Link>
+          {user && (
+            <Link href="/blog/new" className="md:hidden">
+              <Button className="shadow" size="sm">
+                New Blog Post
+              </Button>
+            </Link>
+          )}
           <button
             className="md:hidden rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}

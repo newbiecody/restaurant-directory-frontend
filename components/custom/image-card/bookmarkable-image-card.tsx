@@ -6,7 +6,7 @@ import DetailedImageCard from "./detailed-image-card";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import api from "@/lib/api";
-import { useRequireAuth } from "@/hooks/use-require-auth";
+import { useUser } from "@/context/user-context";
 import type React from "react";
 
 interface BookmarkableImageCardProps {
@@ -30,7 +30,7 @@ export default function BookmarkableImageCard({
   className,
   imageClassName,
 }: BookmarkableImageCardProps) {
-  const { user } = useRequireAuth();
+  const { user } = useUser();
   const [isBookmarked, setIsBookmarked] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [showButton, setShowButton] = useState(false);
