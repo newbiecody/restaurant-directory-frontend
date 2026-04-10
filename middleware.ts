@@ -12,6 +12,10 @@ const PROTECTED_DYNAMIC_PATTERNS = [/^\/dish\/\d+\/review$/];
 const SESSION_COOKIE_NAME = process.env.SESSION_COOKIE_NAME ?? "JSESSIONID";
 
 export function middleware(request: NextRequest) {
+  if (process.env.NEXT_PUBLIC_API_MOCKING === "enabled") {
+    return NextResponse.next();
+  }
+
   const { pathname } = request.nextUrl;
 
   const isProtected =

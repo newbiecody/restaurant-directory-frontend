@@ -1,12 +1,50 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useUser } from "@/context/user-context";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import UserActivitySection from "./user-activity-section";
+import UserStatistics from "@/components/custom/user/user-statistics";
+import api from "@/lib/api";
+import type Review from "@/types/review.types";
+import type Bookmark from "@/types/bookmark.types";
+import type { SpringPageResponse } from "@/types/spring.types";
 
 export default function UserOverviewContent() {
   const { user } = useUser();
+  const [reviews, setReviews] = useState<Review[]>([]);
+  const [bookmarkCount, setBookmarkCount] = useState(0);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    if (!user) return;
+
+    const fetchData = async () => {
+      try {
+        const [reviewsRes, bookmarksRes] = await Promise.all([
+          api
+            .get<SpringPageResponse<Review[]>>(
+              `/reviews?userId=${user.id}&page=0&size=100`
+            )
+            .catch(() => ({ content: [] })),
+          api
+            .get<SpringPageResponse<Bookmark[]>>(`/bookmarks?page=0&size=100`)
+            .catch(() => ({ content: [] })),
+        ]);
+
+        setReviews(reviewsRes.content || []);
+        setBookmarkCount((bookmarksRes.content || []).length);
+      } catch {
+        // Silently fail
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [user]);
 
   if (!user) {
     return (
@@ -65,6 +103,10 @@ export default function UserOverviewContent() {
         </Card>
       </div>
 
+      {!isLoading && (
+        <UserStatistics reviews={reviews} bookmarks={bookmarkCount} />
+      )}
+
       <Card>
         <CardHeader>
           <CardTitle>Profile Information</CardTitle>
@@ -87,6 +129,11 @@ export default function UserOverviewContent() {
           )}
         </CardContent>
       </Card>
+
+      <div className="space-y-4">
+        <h2 className="text-2xl font-bold">Recent Activity</h2>
+        <UserActivitySection userId={user.id} />
+      </div>
     </div>
   );
 }

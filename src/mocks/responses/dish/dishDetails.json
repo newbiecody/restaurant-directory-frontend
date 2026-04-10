@@ -1,0 +1,22 @@
+{
+  "id": 1,
+  "restaurantId": 101,
+  "name": "Signature Laksa",
+  "description": "Spicy coconut noodle soup with shrimp and egg. A traditional Southeast Asian favorite that's been perfected over generations.",
+  "price": 18.99,
+  "simpleRating": 4.8,
+  "reviewPhotos": [
+    {
+      "photoId": 1,
+      "reviewId": 501,
+      "photoUrl": "https://media.istockphoto.com/id/1433432507/photo/healthy-eating-plate-with-vegan-or-vegetarian-food-in-woman-hands-healthy-plant-based-diet.jpg?s=1024x1024&w=is&k=20&c=JUZhSJ-5rTsJgUdK_3V49HTmSe7_G8ckaUejdWxjsgY=",
+      "uploadedAt": "2025-10-02T14:36:00Z"
+    },
+    {
+      "photoId": 2,
+      "reviewId": 501,
+      "photoUrl": "https://media.istockphoto.com/id/1433432507/photo/healthy-eating-plate-with-vegan-or-vegetarian-food-in-woman-hands-healthy-plant-based-diet.jpg?s=1024x1024&w=is&k=20&c=JUZhSJ-5rTsJgUdK_3V49HTmSe7_G8ckaUejdWxjsgY=",
+      "uploadedAt": "2025-10-02T14:36:00Z"
+    }
+  ]
+}

@@ -67,6 +67,8 @@ function NavBar() {
         <NavigationMenu>
           <NavigationMenuList className="flex flex-col md:flex-row md:space-x-4">
             <MenuItem label="Home" href="/" />
+            <MenuItem label="Explore" href="/explore" />
+            <MenuItem label="Activity" href="/activity" />
             <MenuItem label="Bookmarked" href="/user/overview?tab=savedDishes" />
             <MenuItem label="Blog Posts" href="/blog" />
           </NavigationMenuList>
