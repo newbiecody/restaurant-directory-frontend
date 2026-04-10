@@ -9,12 +9,14 @@ import type Dish from "@/types/dish.types";
 import { useDebounce } from "@/hooks/use-debounce";
 import { useSearchHistory } from "@/hooks/use-search-history";
 import { useDietaryPreferences } from "@/hooks/use-dietary-preferences";
+import { useSavedSearches } from "@/hooks/use-saved-searches";
 import SearchInput from "@/components/custom/search/search-input";
 import SortSelect from "@/components/custom/search/sort-select";
 import FilterPanel from "@/components/custom/search/filter-panel";
 import SearchHistory from "@/components/custom/search/search-history";
 import QuickFilters from "@/components/custom/search/quick-filters";
 import DietaryPreferences from "@/components/custom/search/dietary-preferences";
+import SavedSearches from "@/components/custom/search/saved-searches";
 import BookmarkableImageCard from "@/components/custom/image-card/bookmarkable-image-card";
 import { Button } from "@/components/ui/button";
 
@@ -24,6 +26,12 @@ export default function ExploreClient() {
   const { history, isLoaded, addSearch, clearHistory, removeItem } =
     useSearchHistory();
   const { preferences, updatePreferences } = useDietaryPreferences();
+  const {
+    searches: savedSearches,
+    isLoaded: savedSearchesLoaded,
+    saveSearch,
+    deleteSearch,
+  } = useSavedSearches();
 
   // Initialize from URL params
   const [searchTerm, setSearchTerm] = useState(
@@ -199,6 +207,18 @@ export default function ExploreClient() {
     setMinRating(minRating || "");
   };
 
+  const handleSaveCurrentSearch = (name: string) => {
+    saveSearch(name, searchTerm, cuisines, minPrice, maxPrice, minRating);
+  };
+
+  const handleLoadSavedSearch = (search: any) => {
+    setSearchTerm(search.searchTerm);
+    setCuisines(search.cuisines);
+    setMinPrice(search.minPrice || "");
+    setMaxPrice(search.maxPrice || "");
+    setMinRating(search.minRating || "");
+  };
+
   return (
     <div className="space-y-6">
       {/* Search and Sort Controls */}
@@ -226,6 +246,14 @@ export default function ExploreClient() {
           preferences={preferences}
           onChange={updatePreferences}
         />
+        {savedSearchesLoaded && (
+          <SavedSearches
+            searches={savedSearches}
+            onLoadSearch={handleLoadSavedSearch}
+            onSaveCurrentSearch={handleSaveCurrentSearch}
+            onDeleteSearch={deleteSearch}
+          />
+        )}
       </div>
 
       {/* Quick Filters */}
