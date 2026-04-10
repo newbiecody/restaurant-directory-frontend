@@ -8,11 +8,13 @@ import type { SpringPageResponse } from "@/types/spring.types";
 import type Dish from "@/types/dish.types";
 import { useDebounce } from "@/hooks/use-debounce";
 import { useSearchHistory } from "@/hooks/use-search-history";
+import { useDietaryPreferences } from "@/hooks/use-dietary-preferences";
 import SearchInput from "@/components/custom/search/search-input";
 import SortSelect from "@/components/custom/search/sort-select";
 import FilterPanel from "@/components/custom/search/filter-panel";
 import SearchHistory from "@/components/custom/search/search-history";
 import QuickFilters from "@/components/custom/search/quick-filters";
+import DietaryPreferences from "@/components/custom/search/dietary-preferences";
 import BookmarkableImageCard from "@/components/custom/image-card/bookmarkable-image-card";
 import { Button } from "@/components/ui/button";
 
@@ -21,6 +23,7 @@ export default function ExploreClient() {
   const searchParams = useSearchParams();
   const { history, isLoaded, addSearch, clearHistory, removeItem } =
     useSearchHistory();
+  const { preferences, updatePreferences } = useDietaryPreferences();
 
   // Initialize from URL params
   const [searchTerm, setSearchTerm] = useState(
@@ -219,6 +222,10 @@ export default function ExploreClient() {
             </span>
           )}
         </Button>
+        <DietaryPreferences
+          preferences={preferences}
+          onChange={updatePreferences}
+        />
       </div>
 
       {/* Quick Filters */}
