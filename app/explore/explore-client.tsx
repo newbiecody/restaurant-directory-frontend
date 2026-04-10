@@ -12,6 +12,7 @@ import SearchInput from "@/components/custom/search/search-input";
 import SortSelect from "@/components/custom/search/sort-select";
 import FilterPanel from "@/components/custom/search/filter-panel";
 import SearchHistory from "@/components/custom/search/search-history";
+import QuickFilters from "@/components/custom/search/quick-filters";
 import BookmarkableImageCard from "@/components/custom/image-card/bookmarkable-image-card";
 import { Button } from "@/components/ui/button";
 
@@ -183,6 +184,18 @@ export default function ExploreClient() {
     setMaxPrice(item.maxPrice || "");
   };
 
+  const handleApplyPreset = (
+    cuisines: string[],
+    minPrice?: string,
+    maxPrice?: string,
+    minRating?: string
+  ) => {
+    setCuisines(cuisines);
+    setMinPrice(minPrice || "");
+    setMaxPrice(maxPrice || "");
+    setMinRating(minRating || "");
+  };
+
   return (
     <div className="space-y-6">
       {/* Search and Sort Controls */}
@@ -207,6 +220,9 @@ export default function ExploreClient() {
           )}
         </Button>
       </div>
+
+      {/* Quick Filters */}
+      <QuickFilters onApplyPreset={handleApplyPreset} />
 
       {/* Filter Panel */}
       {showFilters && (
