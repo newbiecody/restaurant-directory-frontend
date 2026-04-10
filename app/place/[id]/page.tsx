@@ -5,7 +5,7 @@ import type Dish from "@/types/dish.types";
 import type { SpringPageResponse } from "@/types/spring.types";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import DetailedImageCard from "@/components/custom/image-card/detailed-image-card";
+import BookmarkableImageCard from "@/components/custom/image-card/bookmarkable-image-card";
 
 async function fetchRestaurant(id: string) {
   try {
@@ -112,12 +112,13 @@ export default async function RestaurantProfilePage({
         {dishes.length > 0 && (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {dishes.map((dish) => (
-              <DetailedImageCard
+              <BookmarkableImageCard
                 key={dish.id}
                 src={dish.reviewPhotos?.[0]?.photoUrl ?? "/placeholder-dish.jpg"}
                 alt={dish.name}
                 title={dish.name}
                 href={`/dish/${dish.id}`}
+                dishId={dish.id}
                 footer={
                   <div className="space-y-1 text-xs">
                     {dish.description && (

@@ -10,7 +10,7 @@ import { useDebounce } from "@/hooks/use-debounce";
 import SearchInput from "@/components/custom/search/search-input";
 import SortSelect from "@/components/custom/search/sort-select";
 import FilterPanel from "@/components/custom/search/filter-panel";
-import DetailedImageCard from "@/components/custom/image-card/detailed-image-card";
+import BookmarkableImageCard from "@/components/custom/image-card/bookmarkable-image-card";
 import { Button } from "@/components/ui/button";
 
 export default function ExploreClient() {
@@ -256,12 +256,13 @@ export default function ExploreClient() {
       {dishes.length > 0 && (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {dishes.map((dish) => (
-            <DetailedImageCard
+            <BookmarkableImageCard
               key={dish.id}
               src={dish.reviewPhotos?.[0]?.photoUrl ?? "/placeholder-dish.jpg"}
               alt={dish.name}
               title={dish.name}
               href={`/dish/${dish.id}`}
+              dishId={dish.id}
               footer={
                 <div className="space-y-1 text-xs">
                   {dish.description && (
