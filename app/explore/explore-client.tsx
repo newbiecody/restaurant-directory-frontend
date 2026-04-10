@@ -7,15 +7,19 @@ import api from "@/lib/api";
 import type { SpringPageResponse } from "@/types/spring.types";
 import type Dish from "@/types/dish.types";
 import { useDebounce } from "@/hooks/use-debounce";
+import { useSearchHistory } from "@/hooks/use-search-history";
 import SearchInput from "@/components/custom/search/search-input";
 import SortSelect from "@/components/custom/search/sort-select";
 import FilterPanel from "@/components/custom/search/filter-panel";
+import SearchHistory from "@/components/custom/search/search-history";
 import BookmarkableImageCard from "@/components/custom/image-card/bookmarkable-image-card";
 import { Button } from "@/components/ui/button";
 
 export default function ExploreClient() {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const { history, isLoaded, addSearch, clearHistory, removeItem } =
+    useSearchHistory();
 
   // Initialize from URL params
   const [searchTerm, setSearchTerm] = useState(
@@ -38,6 +42,13 @@ export default function ExploreClient() {
   const [showFilters, setShowFilters] = useState(false);
 
   const debouncedSearch = useDebounce(searchTerm, 400);
+
+  // Save search to history when debounced search changes
+  useEffect(() => {
+    if (isLoaded && debouncedSearch) {
+      addSearch(debouncedSearch, cuisines, minPrice, maxPrice);
+    }
+  }, [debouncedSearch, isLoaded, cuisines, minPrice, maxPrice, addSearch]);
 
   // Calculate active filter count
   const activeFilterCount =
@@ -155,6 +166,13 @@ export default function ExploreClient() {
     setShowFilters(false);
   };
 
+  const handleSelectHistory = (item: any) => {
+    setSearchTerm(item.query);
+    setCuisines(item.cuisines);
+    setMinPrice(item.minPrice || "");
+    setMaxPrice(item.maxPrice || "");
+  };
+
   return (
     <div className="space-y-6">
       {/* Search and Sort Controls */}
@@ -198,6 +216,16 @@ export default function ExploreClient() {
           lon={lon}
           onLonChange={setLon}
           onReset={handleResetFilters}
+        />
+      )}
+
+      {/* Search History */}
+      {!debouncedSearch && isLoaded && dishes.length === 0 && (
+        <SearchHistory
+          items={history}
+          onSelect={handleSelectHistory}
+          onRemove={removeItem}
+          onClear={clearHistory}
         />
       )}
 
